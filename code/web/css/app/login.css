@@ -1,0 +1,51 @@
+
+.login-page {
+    background-color: #444444 !important;
+}
+
+.login-box-body {
+    color: #FFFFFF;
+    background-color: #4675B4 !important;
+}
+.login-box-body hr{
+    border-top: 1px solid #3c6ba9;
+}
+
+.login-logo {
+    background-color: #ffffff;
+    margin-right: -20px;
+    margin-left: -20px;
+}
+
+.nombreEmpresaLogin {
+    font-size: 35px;
+    font-weight: 100;
+    font-family: Lato, sans-serif;
+    vertical-align: middle;
+    position: absolute;
+    left: 74px;
+    top: 60px;
+    z-index: 2;
+}
+
+.factor {
+    font-weight: 400;
+    color: #337ab7;
+}
+
+.energia {
+    font-weight: 300;
+    color: #2EA7FF;
+}
+
+.btn.btn-login {
+    width: 120px;
+    display: block;
+    color: white;
+    text-transform: uppercase;
+    margin: 20px auto;
+    /*background: #2980b9;*/
+    transition: all 0.5s ease-in-out;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}

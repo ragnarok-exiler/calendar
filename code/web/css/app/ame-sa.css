@@ -1,0 +1,185 @@
+.ameName {
+  color: #89151a;
+  font-size: 62px;
+  font-weight: 100;
+  font-family: Fresca, sans-serif;
+  vertical-align: middle;
+  position: absolute;
+  left: 50px;
+  z-index: 2
+}
+.ameNameSmall {
+  color: #89151a;
+  font-size: 45px;
+  font-weight: 100;
+  font-family: Fresca, sans-serif;
+  vertical-align: middle;
+  position: absolute;
+  z-index: 2
+}
+
+.skin-red-light .main-header .navbar, .skin-red-light .main-header .logo  {
+  background-color: #94262b;
+}
+.skin-red-light .main-header .navbar .sidebar-toggle:hover{
+  background: rgba(0,0,0,0.1);
+  color: #f6f6f6;
+}
+.skin-red-light .main-header .logo:hover {
+  background-color: #94262b;
+}
+
+/****************************************************** Ribbon ********************************************************/
+.ribbon_wrap {
+  border-bottom: 1px solid #94262b;
+}
+
+@media (min-width: 450px) {
+  .ribbon::after {
+    border-color: #94262b transparent #94262b #94262b;
+  }
+}
+
+/************************************************** Breadcrumb ********************************************************/
+.breadcrumb a.active {
+  background: #94262b;
+}
+.breadcrumb a.active:hover {
+  background: #94262b;
+}
+
+.breadcrumb a.active::before,
+.breadcrumb a.active::after {
+  background: #94262b;
+  border-color: darkred;
+}
+
+.breadcrumb a.active:hover::before {
+  background: #94262b;
+}
+
+.breadcrumb .active:hover::after {
+  background: #94262b;
+}
+
+/*************************** BOOSTRAP ***************************************/
+.bg-primary{
+  color: #fff;
+  background-color: #94262b !important;
+}
+
+/* panel */
+.panel-primary {
+  border-color: #94262B !important;
+}
+
+.panel-primary > .panel-heading {
+  color: #FFFFFF;
+  background-color: #94262B;
+  border-color: #FFFFFF  !important;
+  /*color: #000000;*/
+  /*background-color: #f5f5f5;*/
+  /*border-color: #ddd  !important;*/
+}
+
+.panel-heading .glyphicon{
+  color: #000000;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
+
+/* button*/
+.btn-primary {
+  color: #333 !important;
+  background-color: #fff !important;
+  border-color: #ccc !important;
+}
+
+.btn-primary:hover {
+  color: #333 !important;
+  background-color: #e6e6e6 !important;
+  border-color: #adadad !important;
+}
+
+.btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+  color: #333 !important;
+  background-color: #e6e6e6 !important;
+  border-color: #adadad !important;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  color: #333 !important;
+  background-color: #e6e6e6 !important;
+  border-color: #8c8c8c !important;
+}
+
+/*.kv-child-table-row th {
+    border: none !important;
+}*/
+
+/**** SELECT COMPANY ************/
+#selectCompany .select2-selection {
+  background-color: #ad2329;
+  border: 1px solid #e96666;
+}
+
+#selectCompany .select2-container--krajee .select2-selection {
+  background-color: #ad2329;
+  border: 1px solid #e96666;
+}
+
+#selectCompany .select2-container--krajee .select2-selection--single .select2-selection__arrow{
+  border-left: 1px solid #e96666 !important;
+}
+
+
+#selectCompany .select2-container--krajee .select2-selection:focus, #selectCompany .select2-container--krajee.select2-container--open .select2-selection{
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px rgba(233, 102, 102, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px rgba(233, 102, 102, 0.6);
+  border-color: #e96666;
+}
+
+.select2-container--krajee .select2-results__option--highlighted[aria-selected]{
+  background-color: #ad2329 !important;
+}
+
+.select2-container--krajee .select2-results__option[aria-selected=true]{
+  color: #fff;
+  background-color: #e96666 !important;
+}
+
+/************************** DATEPICKER ******************************/
+.datepicker table tr td.active.active, .datepicker table tr td.active.highlighted.active, .datepicker table tr td.active.highlighted:active, .datepicker table tr td.active:active{
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
+
+.datepicker table tr td.active.active.focus, .datepicker table tr td.active.active:focus,
+.datepicker table tr td.active.active:hover, .datepicker table tr td.active.highlighted.active.focus,
+.datepicker table tr td.active.highlighted.active:focus, .datepicker table tr td.active.highlighted.active:hover,
+.datepicker table tr td.active.highlighted:active.focus, .datepicker table tr td.active.highlighted:active:focus,
+.datepicker table tr td.active.highlighted:active:hover, .datepicker table tr td.active:active.focus,
+.datepicker table tr td.active:active:focus, .datepicker table tr td.active:active:hover{
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
+
+.selected_cp {
+  background-color: #e4d6d5;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+.control-sidebar-light .control-sidebar-menu>li>a:hover {
+   background: #e4d6d5;
+}
+
+#grid-tooltip {
+  border: 1px solid #dddddd;
+  background: #d9534f;
+}
