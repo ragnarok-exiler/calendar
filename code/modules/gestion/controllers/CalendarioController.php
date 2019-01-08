@@ -86,8 +86,6 @@ class CalendarioController extends Controller
             $holidays->days_number++;
         }
 
-
-
         if ($holidays->save()) {
             Yii::$app->session->addFlash('success', 'Días solicitados con exito.');
             return $this->redirect(['/gestion/calendario']);
@@ -122,5 +120,14 @@ class CalendarioController extends Controller
             $year = date('Y');
         }
         return $this->render('departamento', ['year' => $year]);
+    }
+
+    public function actionBookstack()
+    {
+
+        if (empty($year = Yii::$app->request->post('year'))) {
+            $year = date('Y');
+        }
+        return $this->render('bookstack', ['year' => $year]);
     }
 }

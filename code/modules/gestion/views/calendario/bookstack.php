@@ -10,7 +10,7 @@ use kartik\helpers\Html;
 /* @var int $year */
 
 
-$this->title = 'Departamento';
+$this->title = 'Bookstack';
 echo Breadcrumbs::widget([
     'links' => [
         [
@@ -28,8 +28,6 @@ echo Breadcrumbs::widget([
 $initialYear = 2018;
 $nextYear = date('Y') + 1;
 $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
-
-
 
 
 ?>
@@ -66,62 +64,15 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
             ?>
         </div>
     </div>
-
-
-
-    <style>
-        .month {
-
-        }
-
-        .day {
-            display: inline-block;
-            border: 1px solid #DCDCDC;
-            height: 35px;
-            width: 35px;
-            line-height: 35px;
-            text-align: center;
-            color: #555555;
-        }
-
-        .weekend {
-            background-color: #FEFFCC;
-        }
-
-        .month-header {
-            display: inline-block;
-            border: 1px solid #DCDCDC;
-            font-weight: bold;
-            height: 35px;
-            width: 35px;
-            line-height: 35px;
-            text-align: center;
-            color: #555555;
-            background-color: #E5E5E5;
-        }
-
-        .user-header {
-            background-color: #DCE8F6;
-        }
-
-        .user {
-            padding: 0 10px;
-            color: #555555;
-            font-weight: bold;
-            background-color: #E5E5E5;
-            border: 1px solid #DCDCDC;
-        }
-
-        .holiday {
-            background-color: #B4FFA8;
-        }
-
-        .festive {
-            background-color: #F6BDBC;
-        }
-
-
-    </style>
+    <?php
+    $daySyle = 'display: inline-block; border: 1px solid #DCDCDC; height: 35px; width: 35px; line-height: 35px; text-align: center; color: #616176;';
+    $weekendStyle = 'background-color: #FEFFCC;';
+    $monthHeaderStyle = 'display: inline-block; border: 1px solid #DCDCDC; height: 35px; width: 35px; line-height: 35px; text-align: center; color: #616176; background-color: #E6E6E6;';
+    $userHeaderStyle = 'background-color: #DCE8F6;';
+    $userStyle = ' padding: 0 10px; color: #616176; background-color: #E5E5E5; border: 1px solid #DCDCDC; font-weight: bold;';
+    $holidayStyle = 'background-color: #B4FFA8;';
+    $festivesStyle = 'background-color: #F6BDBC;';
+    ?>
     <?php
     $users = \app\models\User::find()->orderBy('name')->all();
     $festives = \app\modules\gestion\models\Festive::find()->select('free_day')->column();
@@ -140,36 +91,36 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
         echo Html::beginTag('table', ['class' => 'month', 'id' => $month]);
         echo Html::beginTag('thead');
         echo Html::beginTag('tr');
-        echo Html::tag('th', '', ['class' => 'user-header']);
+        echo Html::tag('th', '', ['style' => $userHeaderStyle]);
         for ($day = 1; $day <= $monthDays; $day++) {
-            echo Html::tag('th', $day, ['class' => 'month-header']);
+            echo Html::tag('th', $day, ['style' => $monthHeaderStyle]);
         }
         echo Html::endTag('tr');
         echo Html::endTag('thead');
         foreach ($users as $user) {
             $userMonthHolidays = \app\modules\gestion\models\Holidays::findAll(['user_id' => $user->id]);
             echo Html::beginTag('tr');
-            echo Html::tag('td', $user->name, ['class' => 'user']);
+            echo Html::tag('td', $user->name, ['style' => $userStyle]);
             for ($day = 1; $day <= $monthDays; $day++) {
                 $fullDate = $year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT) . '-' . str_pad($day, 2, '0',
                         STR_PAD_LEFT);
                 $dayInfo = new DateTime($fullDate);
-                $monthConfig[$user->username][$day]['class'][] = 'day';
+                $monthConfig[$user->username][$day]['style'][] = $daySyle;
                 if ($dayInfo->format('N') >= 6) {
-                    $monthConfig[$user->username][$day]['class'][] = 'weekend';
+                    $monthConfig[$user->username][$day]['style'][] = $weekendStyle;
                 } elseif (in_array($fullDate, $festives)) {
-                    $monthConfig[$user->username][$day]['class'][] = 'festive';
+                    $monthConfig[$user->username][$day]['style'][] = $festivesStyle;
                 } elseif (!empty($userMonthHolidays)) {
                     foreach ($userMonthHolidays as $userMonthHoliday) {
                         if ($fullDate >= $userMonthHoliday->start_date && $fullDate <= $userMonthHoliday->end_date) {
-                            $monthConfig[$user->username][$day]['class'][] = 'holiday';
+                            $monthConfig[$user->username][$day]['style'][] = $holidayStyle;
                         }
 
                     }
                 }
 
 
-                echo Html::tag('td', '', ['class' => implode(' ', $monthConfig[$user->username][$day]['class'])]);
+                echo Html::tag('td', '', ['style' => implode(' ', $monthConfig[$user->username][$day]['style'])]);
 
 //        $monthConfig[$user->username][$day] = [];
 //        echo Html::tag('div', $day, ['class' => 'day', 'style' => '']);
