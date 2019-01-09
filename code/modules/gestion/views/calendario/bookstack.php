@@ -65,11 +65,11 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
         </div>
     </div>
     <?php
-    $daySyle = 'display: inline-block; border: 1px solid #DCDCDC; height: 35px; width: 35px; line-height: 35px; text-align: center; color: #616176;';
+    $daySyle = 'border: 1px solid #DCDCDC; height: 30px; min-width: 30px; text-align: center; color: #616176;';
     $weekendStyle = 'background-color: #FEFFCC;';
-    $monthHeaderStyle = 'display: inline-block; border: 1px solid #DCDCDC; height: 35px; width: 35px; line-height: 35px; text-align: center; color: #616176; background-color: #E6E6E6;';
-    $userHeaderStyle = 'background-color: #DCE8F6;';
-    $userStyle = ' padding: 0 10px; color: #616176; background-color: #E5E5E5; border: 1px solid #DCDCDC; font-weight: bold;';
+    $monthHeaderStyle = 'border: 1px solid #DCDCDC; height: 30px; min-width: 30px; text-align: center; color: #616176; background-color: #E6E6E6;';
+    $userHeaderStyle = 'background-color: #DCE8F6; min-width: 140px;';
+    $userStyle = 'padding: 0 10px; color: #616176; background-color: #E5E5E5; border: 1px solid #DCDCDC; font-weight: bold;';
     $holidayStyle = 'background-color: #B4FFA8;';
     $festivesStyle = 'background-color: #F6BDBC;';
     ?>
@@ -88,15 +88,13 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
 //        "filled" => true,
 //    ]);
         echo Html::tag('h4', $monthsList[$month]);
-        echo Html::beginTag('table', ['class' => 'month', 'id' => $month]);
-        echo Html::beginTag('thead');
+        echo Html::beginTag('table', ['class' => 'month', 'id' => $month,'style'=>'font-size: 12px;']);
         echo Html::beginTag('tr');
-        echo Html::tag('th', '', ['style' => $userHeaderStyle]);
+        echo Html::tag('td', '', ['style' => $userHeaderStyle]);
         for ($day = 1; $day <= $monthDays; $day++) {
-            echo Html::tag('th', $day, ['style' => $monthHeaderStyle]);
+            echo Html::tag('td', $day, ['style' => $monthHeaderStyle]);
         }
         echo Html::endTag('tr');
-        echo Html::endTag('thead');
         foreach ($users as $user) {
             $userMonthHolidays = \app\modules\gestion\models\Holidays::findAll(['user_id' => $user->id]);
             echo Html::beginTag('tr');

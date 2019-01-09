@@ -30,8 +30,6 @@ $nextYear = date('Y') + 1;
 $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
 
 
-
-
 ?>
 
 <div class="calendario-default-index">
@@ -68,20 +66,17 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
     </div>
 
 
-
     <style>
         .month {
 
         }
 
         .day {
-            display: inline-block;
             border: 1px solid #DCDCDC;
-            height: 35px;
-            width: 35px;
-            line-height: 35px;
+            height: 30px;
+            min-width: 30px;
             text-align: center;
-            color: #555555;
+            color: #616176;
         }
 
         .weekend {
@@ -89,27 +84,25 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
         }
 
         .month-header {
-            display: inline-block;
             border: 1px solid #DCDCDC;
-            font-weight: bold;
-            height: 35px;
-            width: 35px;
-            line-height: 35px;
+            height: 30px;
+            min-width: 30px;
             text-align: center;
-            color: #555555;
-            background-color: #E5E5E5;
+            color: #616176;
+            background-color: #E6E6E6;
         }
 
         .user-header {
             background-color: #DCE8F6;
+            min-width: 140px;
         }
 
         .user {
             padding: 0 10px;
-            color: #555555;
-            font-weight: bold;
+            color: #616176;
             background-color: #E5E5E5;
             border: 1px solid #DCDCDC;
+            font-weight: bold;
         }
 
         .holiday {
