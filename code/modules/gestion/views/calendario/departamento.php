@@ -109,6 +109,10 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
             background-color: #B4FFA8;
         }
 
+        .half-day {
+            background-color: #FBE1B2;
+        }
+
         .festive {
             background-color: #F6BDBC;
         }
@@ -155,14 +159,25 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
                 } elseif (!empty($userMonthHolidays)) {
                     foreach ($userMonthHolidays as $userMonthHoliday) {
                         if ($fullDate >= $userMonthHoliday->start_date && $fullDate <= $userMonthHoliday->end_date) {
-                            $monthConfig[$user->username][$day]['class'][] = 'holiday';
+                            switch ($userMonthHoliday->holiday_type) {
+                                case 2:
+                                    $monthConfig[$user->username][$day]['class'][] = 'half-day';
+                                    $monthConfig[$user->username][$day]['value'] = '1/2';
+                                    break;
+                                case 1:
+                                default:
+                                    $monthConfig[$user->username][$day]['class'][] = 'holiday';
+                                    break;
+                            }
                         }
 
                     }
                 }
 
 
-                echo Html::tag('td', '', ['class' => implode(' ', $monthConfig[$user->username][$day]['class'])]);
+                echo Html::tag('td',
+                    isset($monthConfig[$user->username][$day]['value']) ? $monthConfig[$user->username][$day]['value'] : '',
+                    ['class' => implode(' ', $monthConfig[$user->username][$day]['class'])]);
 
 //        $monthConfig[$user->username][$day] = [];
 //        echo Html::tag('div', $day, ['class' => 'day', 'style' => '']);

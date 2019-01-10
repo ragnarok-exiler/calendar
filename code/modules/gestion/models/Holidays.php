@@ -13,7 +13,8 @@ use Yii;
  * @property string $start_date
  * @property string $end_date
  * @property string $range_date
- * @property int $days_number
+ * @property float $days_number
+ * @property int $holiday_type
  * @property boolean departmen_responsable_accepted
  * @property boolean boss_accepted
  *
@@ -22,6 +23,7 @@ use Yii;
 class Holidays extends \yii\db\ActiveRecord
 {
     public $range_date;
+
     /**
      * {@inheritdoc}
      */
@@ -38,7 +40,8 @@ class Holidays extends \yii\db\ActiveRecord
         return [
             [['user_id', 'start_date', 'end_date', 'days_number'], 'required'],
             [['user_id', 'days_number'], 'integer'],
-            [['user_id', 'days_number', 'departmen_responsable_accepted', 'boss_accepted'], 'integer'],
+            [['user_id', 'departmen_responsable_accepted', 'boss_accepted', 'holiday_type'], 'integer'],
+            [['days_number'], 'number'],
             [['start_date', 'end_date'], 'safe'],
 
             [['start_date'], 'date', 'format' => 'php:Y-m-d'],
@@ -60,12 +63,13 @@ class Holidays extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('calendario', 'ID'),
-            'user_id' => Yii::t('calendario', 'User ID'),
-            'start_date' => Yii::t('calendario', 'Start Date'),
-            'end_date' => Yii::t('calendario', 'End Date'),
-            'days_number' => Yii::t('calendario', 'Days Number'),
-            'departmen_responsable_accepted' => Yii::t('calendario', 'Department Responsable Accepted'),
-            'boss_accepted' => Yii::t('calendario', 'Boss Accepted'),
+            'user_id' => Yii::t('calendario', 'ID de usuario'),
+            'start_date' => Yii::t('calendario', 'Fecha inicio'),
+            'end_date' => Yii::t('calendario', 'Fecha fin'),
+            'days_number' => Yii::t('calendario', 'Numero de días'),
+            'holiday_type' => Yii::t('calendario', 'Tipo de vcaciones'),
+            'departmen_responsable_accepted' => Yii::t('calendario', 'Aceptado responsable departamento'),
+            'boss_accepted' => Yii::t('calendario', 'Aceptado jefe'),
         ];
     }
 
