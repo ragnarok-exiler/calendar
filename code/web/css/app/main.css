@@ -291,7 +291,7 @@ a.desc:after {
     }
 }
 
-@media (min-width: 788px) {
+@media (min-width: 768px) {
     .main-header.smaller .logo > span > * {
         position: relative;
         top: -7px;
@@ -300,12 +300,14 @@ a.desc:after {
     .sidebar-mini.sidebar-collapse .main-header .logo::before {
         width: 50px;
     }
-}
 
-@media (min-width: 788px) {
     .sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
+        display: none !important;
         margin-left: -10px;
         font-size: 30px;
+    }
+    .sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
+        display: block !important;
     }
 }
 
@@ -944,7 +946,7 @@ ul {
 }
 
 #grid-tooltip {
-    display: block;
+    /*display: block;*/
     opacity: 0;
     transition: opacity .4s ease-in-out;
     -moz-transition: opacity .4s ease-in-out;

@@ -42,6 +42,7 @@ echo Breadcrumbs::widget([
 
 
         <?php
+        echo Html::beginTag('div', ['class' => 'col-md-6 col-lg-12']);
         echo DetailView::widget([
             'model' => $holidays,
             'mode' => DetailView::MODE_EDIT,
@@ -54,7 +55,7 @@ echo Breadcrumbs::widget([
             ],
             'formOptions' => [
                 'id' => 'solicitud-dias',
-                'action' => Url::to(['/gestion/calendario/process-solicitud'])
+                'action' => Url::to(['/gestion/calendario/process-solicitud']),
             ],
             'buttons1' => '',
             'buttons2' => '',
@@ -62,32 +63,22 @@ echo Breadcrumbs::widget([
                 [
                     'columns' => [
                         [
-                            'attribute' => 'start_date',
+                            'attribute' => 'range_date',
                             'format' => 'date',
                             'type' => DetailView::INPUT_WIDGET,
                             'widgetOptions' => [
                                 'class' => 'kartik\datecontrol\DateControl',
                                 'widgetOptions' => [
-                                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                                    'pluginOptions' => [
-                                        'autoclose' => true,
-                                        'todayHighlight' => true,
-                                        'todayBtn' => true,
-                                        'daysOfWeekDisabled' => [0, 6],
-                                        'daysOfWeekHighlighted' => [0, 6],
-                                        'datesDisabled' => $blockedDates
-                                    ]
-                                ]
-                            ]
-                        ],
-                        [
-                            'attribute' => 'end_date',
-                            'format' => 'date',
-                            'type' => DetailView::INPUT_WIDGET,
-                            'widgetOptions' => [
-                                'class' => 'kartik\datecontrol\DateControl',
-                                'widgetOptions' => [
-                                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                                    'attribute' => 'start_date',
+                                    'attribute2' => 'end_date',
+                                    'separator'=>'hasta',
+                                    'name'=>$holidays->formName().'[start_date]',
+                                    'name2'=>$holidays->formName().'[end_date]',
+                                    'options'=>[
+                                            $holidays->formName().'[start_date]',
+                                            'placeholder'=>'Fecha de inicio'],
+                                    'options2'=>['placeholder'=>'Fecha de fin'],
+                                    'type' => DatePicker::TYPE_RANGE,
                                     'pluginOptions' => [
                                         'autoclose' => true,
                                         'todayHighlight' => true,
@@ -99,7 +90,6 @@ echo Breadcrumbs::widget([
                                 ]
                             ]
                         ]
-
                     ]
                 ]
             ]
@@ -109,6 +99,8 @@ echo Breadcrumbs::widget([
         echo Html::button('Solicitar',
             ['type' => 'button', 'id' => 'confirm', 'class' => 'btn btn-success pull-right']);
         echo Html::endTag('div');
+        echo Html::endTag('div');
+
 
         ?>
     </div>

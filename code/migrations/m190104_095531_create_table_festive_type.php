@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m190104_095539_create_table_festive_type extends Migration
+class m190104_095531_create_table_festive_type extends Migration
 {
     public function up()
     {
@@ -13,7 +13,7 @@ class m190104_095539_create_table_festive_type extends Migration
 
         $this->createTable('{{%festive_type}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->char()->notNull(),
+            'name' => $this->string(50)->notNull(),
             'requestable' => $this->tinyInteger()->notNull()->defaultValue('0'),
         ], $tableOptions);
 

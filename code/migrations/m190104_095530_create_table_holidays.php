@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m190104_095539_create_table_holidays extends Migration
+class m190104_095530_create_table_holidays extends Migration
 {
     public function up()
     {
@@ -17,7 +17,7 @@ class m190104_095539_create_table_holidays extends Migration
             'start_date' => $this->date()->notNull(),
             'end_date' => $this->date()->notNull(),
             'holiday_type' => $this->integer()->unsigned()->notNull()->defaultValue('1'),
-            'days_number' => $this->decimal(2, 4)->unsigned()->notNull()->defaultValue('1'),
+            'days_number' => $this->decimal(4, 2)->unsigned()->notNull()->defaultValue('1'),
             'departmen_responsable_accepted' => $this->tinyInteger()->unsigned()->notNull()->defaultValue('0'),
             'boss_accepted' => $this->tinyInteger()->unsigned()->notNull()->defaultValue('0'),
         ], $tableOptions);

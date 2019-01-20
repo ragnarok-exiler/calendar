@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m190104_095539_create_table_festive extends Migration
+class m190104_095532_create_table_festive extends Migration
 {
     public function up()
     {

@@ -116,7 +116,8 @@ class CalendarioController extends Controller
     public function actionDepartamento()
     {
 
-        if (empty($year = Yii::$app->request->post('year'))) {
+        $year = Yii::$app->request->post('year');
+        if (empty($year)) {
             $year = date('Y');
         }
         return $this->render('departamento', ['year' => $year]);
@@ -124,8 +125,8 @@ class CalendarioController extends Controller
 
     public function actionBookstack()
     {
-
-        if (empty($year = Yii::$app->request->post('year'))) {
+        $year = Yii::$app->request->post('year');
+        if (empty($year)) {
             $year = date('Y');
         }
         return $this->render('bookstack', ['year' => $year]);
