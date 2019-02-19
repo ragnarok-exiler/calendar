@@ -5,7 +5,7 @@
 }
 
 .wizard .tab-pane {
-    padding-top: 0px !important;
+    padding-top: 0 !important;
 }
 
 /*Disable copy on gridview data*/
@@ -17,8 +17,9 @@
     -o-user-select: none;
     user-select: none;
 }
+
 .datepicker table tr td.disabled,
-.datepicker table tr td.disabled:hover{
+.datepicker table tr td.disabled:hover {
     background-color: #F2DEDE;
 }
 
@@ -90,7 +91,7 @@ a.asc:after, a.desc:after {
     position: relative;
     top: 1px;
     display: inline-block;
-    font-family: 'FontAwesome';
+    font-family: 'FontAwesome', sans-serif;
     font-style: normal;
     font-weight: normal;
     line-height: 1;
@@ -160,14 +161,42 @@ a.desc:after {
     margin: 0;
 }
 
-/************************* NEW CSS STYLES *********************************/
-/***************************** LOGIN **************************************/
+/************************************** NEW CSS STYLES ****************************************************************/
 
-.login-content {
-    margin: 0 auto!important;
+.overlay-wrapper {
+    position: relative;
 }
 
-/***************************** HEADER *************************************/
+
+.kv-loader {
+    background: none !important;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 50px;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: fa-spin 1s infinite steps(8);
+    animation: fa-spin 1s infinite steps(8);
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+}
+
+.kv-loader:before {
+    content: "\f110";
+    height: 100%;
+
+}
+
+/************************************** LOGIN *************************************************************************/
+
+.login-content {
+    margin: 0 auto !important;
+}
+
+/************************************** HEADER *************************************/
 .main-header .navbar {
     margin-left: 250px;
     font-weight: 300;
@@ -306,6 +335,7 @@ a.desc:after {
         margin-left: -10px;
         font-size: 30px;
     }
+
     .sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
         display: block !important;
     }
@@ -448,7 +478,7 @@ a.desc:after {
     color: #2EA7FF;
 }
 
-/***************************************************** SIDEBAR ********************************************************/
+/************************************** SIDEBAR ********************************************************/
 .main-sidebar {
     width: 250px;
 }
@@ -501,7 +531,7 @@ a.desc:after {
     }
 }
 
-/************************** FIXED COMMON **********************************/
+/************************************** FIXED COMMON ******************************************************************/
 .c-fixed .main-header {
     top: 0;
     right: 0;
@@ -523,7 +553,7 @@ a.desc:after {
     }
 }
 
-/********************** Forms ****************************/
+/************************************** FORMS *************************************************************************/
 .form-control {
     font-size: 12px;
     padding: 0 0 0 5px;
@@ -627,19 +657,19 @@ input[type="radio"], input[type="checkbox"] {
     border-bottom-left-radius: 4px !important;
 }
 
-/*************************************************** MODALS STYLES ****************************************************/
+/************************************** MODALS STYLES *****************************************************************/
 .primary.modal-header {
     background: #337ab7;
     color: #fff;
     font-size: 16px;
 }
 
-/*********************************************** FILE UPLOAD **********************************************************/
+/************************************** FILE UPLOAD *******************************************************************/
 .file-caption {
     font-size: 14px;
 }
 
-/******************************************************* DASHBOARDS ***************************************************/
+/************************************** DASHBOARDS ********************************************************************/
 
 .dashboard-item.dashboard-item_red {
     background-color: #EF5350;
@@ -725,7 +755,7 @@ input[type="radio"], input[type="checkbox"] {
     font-weight: 300;
 }
 
-/****************************************************** RIBBON ********************************************************/
+/************************************** RIBBON ************************************************************************/
 .ribbon_wrap {
     padding-bottom: 3px;
     border-bottom: 1px solid #337ab7;
@@ -769,7 +799,7 @@ input[type="radio"], input[type="checkbox"] {
     min-height: 34px;
 }
 
-/************************************************** BREADCRUMB ********************************************************/
+/************************************** BREADCRUMB ********************************************************************/
 
 .breadcrumb {
     overflow: hidden;
@@ -886,7 +916,7 @@ ul {
     margin-bottom: 30px;
 }
 
-/***************************************************** GROWLS *********************************************************/
+/************************************** GROWLS ************************************************************************/
 .growlAlertBlock {
     right: 15px !important;
 }

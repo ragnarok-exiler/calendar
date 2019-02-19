@@ -37,15 +37,51 @@ echo Breadcrumbs::widget([
                 </div>
             </div>
         </div>
-
-
         <?php
         echo GridView::widget([
             'id' => 'kv-grid-demo',
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'panel' => [
+                'type' => GridView::TYPE_PRIMARY,
+                'heading' => Icon::show('calendar') . 'Solicitudes',
+                'after' => false
+            ],
+            'pjax' => true,
+            'bordered' => true,
+            'striped' => true,
+            'condensed' => true,
+            'hover' => true,
+            'persistResize' => false,
+            'headerRowOptions' => ['class' => 'kartik-sheet-style'],
+            'filterRowOptions' => ['class' => 'kartik-sheet-style'],
+            'containerOptions' => ['style' => 'overflow: auto', 'class' => ''],
+            'toggleDataOptions' => ['minCount' => 10],
+            'toolbar' => [
+                [
+                    'content' =>
+                        Html::a(Icon::show('plus'), ['solicitud'],[
+                            'class' => 'btn btn-success',
+                            'title' => Yii::t('kvgrid', 'Nueva solicitud'),
+                            'data' => [
+                                'tooltip' => 1,
+                                'pjax' => 0
+                            ],
+                        ]) . ' ' .
+                        Html::a(Icon::show('repeat'), ['/gestion/calendario/gestion-solicitudes'], [
+                            'class' => 'btn btn-default',
+                            'title' => Yii::t('kvgrid', 'Resetear Tabla'),
+                            'data-pjax' => 0,
+                        ]),
+                    'options' => ['class' => 'btn-group mr-2']
+                ],
+                '{export}',
+                '{toggleData}',
+            ],
+            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
+            'export' => ['fontAwesome' => true],
             'columns' => [
-                'user_id',
+//                'user_id',
                 [
                     'attribute' => 'start_date',
                     'format' => 'date',
@@ -58,7 +94,6 @@ echo Breadcrumbs::widget([
                                 'todayHighlight' => true,
                                 'todayBtn' => true,
                             ],
-
                         ],
                         'ajaxConversion' => true,
                         'asyncRequest' => false
@@ -68,46 +103,8 @@ echo Breadcrumbs::widget([
                 'departmen_responsable_accepted',
                 'boss_accepted',
             ],
-            'containerOptions' => ['style' => 'overflow: auto'], // only set when $responsive = false
-            'headerRowOptions' => ['class' => 'kartik-sheet-style'],
-            'filterRowOptions' => ['class' => 'kartik-sheet-style'],
-            'pjax' => true,
 
-            'toolbar' => [
-                [
-                    'content' =>
-                        Html::button(Icon::show('plus'), [
-                            'class' => 'btn btn-success',
-                            'title' => Yii::t('kvgrid', 'Add Book'),
-                            'onclick' => 'alert("This will launch the book creation form.\n\nDisabled for this demo!");'
-                        ]) . ' ' .
-                        Html::a('<i class="fas fa-redo"></i>', ['grid-demo'], [
-                            'class' => 'btn btn-outline-secondary',
-                            'title' => Yii::t('kvgrid', 'Reset Grid'),
-                            'data-pjax' => 0,
-                        ]),
-                    'options' => ['class' => 'btn-group mr-2']
-                ],
-                '{export}',
-                '{toggleData}',
-            ],
-            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
-            'export' => [
-                'fontAwesome' => true
-            ],
-            'bordered' => true,
-            'striped' => true,
-            'condensed' => true,
 
-            'hover' => true,
-            'panel' => [
-                'type' => GridView::TYPE_PRIMARY,
-                'heading' => 'Test',
-            ],
-            'persistResize' => false,
-            'toggleDataOptions' => ['minCount' => 10],
-            'itemLabelSingle' => 'book',
-            'itemLabelPlural' => 'books'
         ]);
         ?>
     </div>

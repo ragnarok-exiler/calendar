@@ -169,8 +169,8 @@ AppAsset::register($this);
                                         'url' => ['/gestion/calendario/solicitud'],
                                     ],
                                     [
-                                        'label' => 'Solicitar Peticiones',
-                                        'url' => ['/gestion/calendario/peticiones'],
+                                        'label' => 'Gestionar Solicitudes',
+                                        'url' => ['/gestion/calendario/gestion-solicitudes'],
                                     ],
                                     [
                                         'label' => 'Calendario Propio',

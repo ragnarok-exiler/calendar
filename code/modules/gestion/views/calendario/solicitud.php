@@ -63,22 +63,32 @@ echo Breadcrumbs::widget([
                 [
                     'columns' => [
                         [
-                            'attribute' => 'range_date',
+                            'attribute' => 'start_date',
                             'format' => 'date',
                             'type' => DetailView::INPUT_WIDGET,
                             'widgetOptions' => [
                                 'class' => 'kartik\datecontrol\DateControl',
                                 'widgetOptions' => [
-                                    'attribute' => 'start_date',
-                                    'attribute2' => 'end_date',
-                                    'separator'=>'hasta',
-                                    'name'=>$holidays->formName().'[start_date]',
-                                    'name2'=>$holidays->formName().'[end_date]',
-                                    'options'=>[
-                                            $holidays->formName().'[start_date]',
-                                            'placeholder'=>'Fecha de inicio'],
-                                    'options2'=>['placeholder'=>'Fecha de fin'],
-                                    'type' => DatePicker::TYPE_RANGE,
+                                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                                    'pluginOptions' => [
+                                        'autoclose' => true,
+                                        'todayHighlight' => true,
+                                        'todayBtn' => true,
+                                        'daysOfWeekDisabled' => [0, 6],
+                                        'daysOfWeekHighlighted' => [0, 6],
+                                        'datesDisabled' => $blockedDates
+                                    ]
+                                ]
+                            ]
+                        ],
+                        [
+                            'attribute' => 'end_date',
+                            'format' => 'date',
+                            'type' => DetailView::INPUT_WIDGET,
+                            'widgetOptions' => [
+                                'class' => 'kartik\datecontrol\DateControl',
+                                'widgetOptions' => [
+                                    'type' => DatePicker::TYPE_COMPONENT_APPEND,
                                     'pluginOptions' => [
                                         'autoclose' => true,
                                         'todayHighlight' => true,

@@ -97,7 +97,7 @@ class CalendarioController extends Controller
         }
     }
 
-    public function actionPeticiones()
+    public function actionGestionSolicitudes()
     {
         $searchModel = new HolidaysSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->get());
