@@ -3,9 +3,13 @@
 
 /** @var $holidays app\modules\gestion\models\Holidays */
 
+use app\models\User;
+use app\modules\gestion\models\HolidayType;
 use kartik\detail\DetailView;
 use kartik\icons\Icon;
+use kartik\select2\Select2;
 use kartik\widgets\DatePicker;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use kartik\helpers\Html;
@@ -16,6 +20,32 @@ $festives = \app\modules\gestion\models\Festive::find()->select('free_day')->col
 $blockedDates = array_map(function ($festive) {
     return date('d/m/Y', strtotime($festive));
 }, $festives);
+if (Yii::$app->user->can('superAdmin')) {
+    $otherUser = [
+        'attribute' => 'user_id',
+        'type' => DetailView::INPUT_SELECT2,
+        'widgetOptions' => [
+            'size' => Select2::SMALL,
+            'data' => ArrayHelper::map(User::find()->select([
+                'id',
+                new \yii\db\Expression("CONCAT(name, ' <',email,'>') AS name")
+//                'name'
+            ])->where(['status' => 10])->all(),
+                'id', 'name'),
+//            'hideSearch' => true,
+            'theme' => Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Seleccionar tipo ...'],
+            'pluginOptions' => [
+                'dropdownAutoWidth' => true
+            ]
+        ]
+    ];
+} else {
+    $otherUser = [
+        'value' => '',
+        'label' => ''
+    ];
+}
 
 echo Breadcrumbs::widget([
     'links' => [
@@ -42,7 +72,7 @@ echo Breadcrumbs::widget([
 
 
         <?php
-        echo Html::beginTag('div', ['class' => 'col-md-6 col-lg-12']);
+        echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-7']);
         echo DetailView::widget([
             'model' => $holidays,
             'mode' => DetailView::MODE_EDIT,
@@ -57,9 +87,46 @@ echo Breadcrumbs::widget([
                 'id' => 'solicitud-dias',
                 'action' => Url::to(['/gestion/calendario/process-solicitud']),
             ],
+            'labelColOptions' => ['class' => 'col-xs-2'],
+            'valueColOptions' => ['class' => 'col-xs-3'],
             'buttons1' => '',
             'buttons2' => '',
             'attributes' => [
+                [
+                    'columns' => [
+                        [
+                            'attribute' => 'holiday_type',
+                            'type' => DetailView::INPUT_SELECT2,
+
+                            'widgetOptions' => [
+                                'value'=> '1',
+                                'size' => Select2::SMALL,
+                                'data' => ArrayHelper::map(HolidayType::find()->where(['requestable' => 1])->all(),
+                                    'id', 'name'),
+                                'hideSearch' => true,
+                                'theme' => Select2::THEME_BOOTSTRAP,
+                                'options' => ['placeholder' => 'Seleccionar tipo ...'],
+                                'pluginOptions' => [
+                                    'dropdownAutoWidth' => true
+
+                                ],
+                                'pluginEvents' => [
+                                    "change" => "function() {
+                                    console.log($(this).val());
+                                    console.log(($(this).val() === 1));
+                                        if($(this).val() === '1'){
+                                            $('#holidays-end_date').removeAttr('disabled').parents('.kv-form-attribute').show().closest('td').prev().text('Fecha Fin');
+                                        }else{
+                                        
+                                            $('#holidays-end_date').attr('disabled','disabled').parents('.kv-form-attribute').hide().closest('td').prev().text('');
+                                        }
+                                     }",
+                                ]
+                            ]
+                        ],
+                        $otherUser
+                    ]
+                ],
                 [
                     'columns' => [
                         [
@@ -70,6 +137,9 @@ echo Breadcrumbs::widget([
                                 'class' => 'kartik\datecontrol\DateControl',
                                 'widgetOptions' => [
                                     'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                                    'options' => [
+                                        'autocomplete' => 'off'
+                                    ],
                                     'pluginOptions' => [
                                         'autoclose' => true,
                                         'todayHighlight' => true,
@@ -89,6 +159,9 @@ echo Breadcrumbs::widget([
                                 'class' => 'kartik\datecontrol\DateControl',
                                 'widgetOptions' => [
                                     'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                                    'options' => [
+                                        'autocomplete' => 'off'
+                                    ],
                                     'pluginOptions' => [
                                         'autoclose' => true,
                                         'todayHighlight' => true,
@@ -99,6 +172,27 @@ echo Breadcrumbs::widget([
                                     ]
                                 ]
                             ]
+                        ]
+                    ]
+                ],
+                [
+                    'columns' => [
+                        [
+                            'label' => 'Horas',
+                            'attribute' => 'days_number',
+                            'type' => DetailView::INPUT_SELECT2,
+                            'widgetOptions' => [
+                                'size' => Select2::SMALL,
+                                'data' => [
+                                    '0.125' => 1,
+                                    '0.25' => 2,
+                                    '0.375' => 3
+                                ],
+                                'hideSearch' => true,
+                                'theme' => Select2::THEME_BOOTSTRAP,
+                                'options' => ['placeholder' => 'Seleccionar tipo ...'],
+                            ],
+                            'visible' => false
                         ]
                     ]
                 ]
@@ -118,6 +212,6 @@ echo Breadcrumbs::widget([
 $this->registerJs(<<<JS
 $(document).on('click','#confirm',function(){
     $('#solicitud-dias').submit();
-})
+});
 JS
 );

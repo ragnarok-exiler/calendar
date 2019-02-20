@@ -8,14 +8,25 @@ class m190104_095531_create_table_festive_type extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%festive_type}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string(50)->notNull(),
-            'requestable' => $this->tinyInteger()->notNull()->defaultValue('0'),
-        ], $tableOptions);
+        $this->createTable('{{%festive_type}}',
+            [
+                'id' => $this->primaryKey(),
+                'name' => $this->string(50)->notNull(),
+                'requestable' => $this->tinyInteger()->notNull()->defaultValue('0'),
+            ],
+            $tableOptions);
+
+        $this->batchInsert('{{%festive_type}}',
+            ['id', 'name'],
+            [
+                [1, 'Fiestas Laborales'],
+                [2 , 'Fiestas Locales Barcelona'],
+                [3, 'Fiestas Locales Madrid']
+            ]
+        );
 
     }
 

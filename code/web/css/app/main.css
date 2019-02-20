@@ -161,6 +161,16 @@ a.desc:after {
     margin: 0;
 }
 
+/* Corrección de select2 para que se ajuste al contenedor*/
+ .select2-container {
+    display: table;
+    table-layout: fixed;
+}
+ .select2-dropdown{
+     border-top:solid 1px #66afe9!important;
+
+ }
+
 /************************************** NEW CSS STYLES ****************************************************************/
 
 .overlay-wrapper {
@@ -634,6 +644,7 @@ input[type="radio"], input[type="checkbox"] {
         text-align: center !important;
     }
 
+    table.detail-view tbody,
     table.detail-view tr,
     table.detail-view td,
     table.detail-view th {
