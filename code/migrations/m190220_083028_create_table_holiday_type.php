@@ -21,15 +21,19 @@ class m190220_083028_create_table_holiday_type extends Migration
             [
                 'id' => $this->primaryKey(2)->unsigned(),
                 'name' => $this->string(50)->notNull(),
+                'class' => $this->string(20)->notNull()->defaultValue('holiday'),
+                'color' => $this->string(7)->notNull()->defaultValue('#FFFFFF'),
+                'calendar_pin' => $this->string(4)->notNull()->defaultValue(''),
                 'requestable' => $this->tinyInteger()->notNull()->defaultValue('1'),
             ],
             $tableOptions);
         $this->batchInsert('{{%holiday_type}}',
-            ['id', 'name'],
+            ['id', 'name', 'class', 'color', 'requestable', 'calendar_pin'],
             [
-                [1, 'Varios días'],
-                [2, '1 Día'],
-                [3 , '1/2 día']
+                [1, 'Varios días', 'holiday', '#B0FFA9', 1, ''],
+                [2, '1 Día', 'holiday', '#B0FFA9', 1, ''],
+                [3, '1/2 día', 'half-day', '#F7E2B2', 1, '1/2'],
+                [4, 'Horas', 'half-day', '#B0FFA9', 0, ''],
             ]
         );
         $this->addForeignKey('FK_holidays_holiday_type', '{{%holidays}}', 'holiday_type', '{{%holiday_type}}', 'id',

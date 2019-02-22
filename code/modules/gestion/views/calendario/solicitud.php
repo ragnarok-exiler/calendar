@@ -24,6 +24,7 @@ if (Yii::$app->user->can('superAdmin')) {
     $otherUser = [
         'attribute' => 'user_id',
         'type' => DetailView::INPUT_SELECT2,
+//        'value'=> Yii::$app->user->id,
         'widgetOptions' => [
             'size' => Select2::SMALL,
             'data' => ArrayHelper::map(User::find()->select([
@@ -34,7 +35,7 @@ if (Yii::$app->user->can('superAdmin')) {
                 'id', 'name'),
 //            'hideSearch' => true,
             'theme' => Select2::THEME_BOOTSTRAP,
-            'options' => ['placeholder' => 'Seleccionar tipo ...'],
+            'options' => ['placeholder' => 'Seleccionar usuario ...'],
             'pluginOptions' => [
                 'dropdownAutoWidth' => true
             ]
@@ -99,13 +100,12 @@ echo Breadcrumbs::widget([
                             'type' => DetailView::INPUT_SELECT2,
 
                             'widgetOptions' => [
-                                'value'=> '1',
+                                'value' => 1,
                                 'size' => Select2::SMALL,
                                 'data' => ArrayHelper::map(HolidayType::find()->where(['requestable' => 1])->all(),
                                     'id', 'name'),
                                 'hideSearch' => true,
                                 'theme' => Select2::THEME_BOOTSTRAP,
-                                'options' => ['placeholder' => 'Seleccionar tipo ...'],
                                 'pluginOptions' => [
                                     'dropdownAutoWidth' => true
 
@@ -116,9 +116,8 @@ echo Breadcrumbs::widget([
                                     console.log(($(this).val() === 1));
                                         if($(this).val() === '1'){
                                             $('#holidays-end_date').removeAttr('disabled').parents('.kv-form-attribute').show().closest('td').prev().text('Fecha Fin');
-                                        }else{
-                                        
-                                            $('#holidays-end_date').attr('disabled','disabled').parents('.kv-form-attribute').hide().closest('td').prev().text('');
+                                        }else{                                        
+                                           $('#holidays-end_date-disp').kvDatepicker('clearDates').parent().siblings('input').attr('disabled','disabled').parents('.kv-form-attribute').hide().closest('td').prev().text('');
                                         }
                                      }",
                                 ]

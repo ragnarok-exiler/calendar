@@ -3,6 +3,7 @@
 namespace app\modules\gestion\models;
 
 use app\models\User;
+use kartik\helpers\Enum;
 use Yii;
 
 /**
@@ -52,14 +53,14 @@ class Holidays extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('holiday_typeuser', 'ID'),
-            'user_id' => Yii::t('holiday_typeuser', 'User ID'),
-            'start_date' => Yii::t('holiday_typeuser', 'Start Date'),
-            'end_date' => Yii::t('holiday_typeuser', 'End Date'),
-            'holiday_type' => Yii::t('holiday_typeuser', 'Holiday Type'),
-            'days_number' => Yii::t('holiday_typeuser', 'Days Number'),
-            'departmen_responsable_accepted' => Yii::t('holiday_typeuser', 'Departmen Responsable Accepted'),
-            'boss_accepted' => Yii::t('holiday_typeuser', 'Boss Accepted'),
+            'id' => Yii::t('holiday_type', 'ID'),
+            'user_id' => Yii::t('holiday_type', 'Usuario'),
+            'start_date' => Yii::t('holiday_type', 'Fecha Inicio'),
+            'end_date' => Yii::t('holiday_type', 'Fecha Fin'),
+            'holiday_type' => Yii::t('holiday_type', 'Tipo de vacaciones'),
+            'days_number' => Yii::t('holiday_type', 'Número de días'),
+            'departmen_responsable_accepted' => Yii::t('holiday_type', 'Aceptado por jefe departamento'),
+            'boss_accepted' => Yii::t('holiday_type', 'Acceptado por dirección'),
         ];
     }
 
@@ -77,5 +78,11 @@ class Holidays extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    public static function getAllowedYears(){
+        $initialYear = 2018;
+        $nextYear = date('Y') + 1;
+        $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
+        return $allowedYears;
     }
 }

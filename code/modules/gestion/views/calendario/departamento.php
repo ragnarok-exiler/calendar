@@ -1,13 +1,12 @@
 <?php
 
-use factorenergia\adminlte\widgets\Box;
-use kartik\helpers\Enum;
 use kartik\widgets\Select2;
 use yii\widgets\Breadcrumbs;
 use kartik\helpers\Html;
 
 
 /* @var int $year */
+/* @var array $allowedYears */
 
 
 $this->title = 'Departamento';
@@ -25,10 +24,6 @@ echo Breadcrumbs::widget([
         ]
     ]
 ]);
-$initialYear = 2018;
-$nextYear = date('Y') + 1;
-$allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
-
 
 ?>
 
@@ -65,76 +60,23 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
         </div>
     </div>
 
-
-    <style>
-        .month {
-
-        }
-
-        .day {
-            border: 1px solid #DCDCDC;
-            height: 30px;
-            min-width: 30px;
-            text-align: center;
-            color: #616176;
-        }
-
-        .weekend {
-            background-color: #FEFFCC;
-        }
-
-        .month-header {
-            border: 1px solid #DCDCDC;
-            height: 30px;
-            min-width: 30px;
-            text-align: center;
-            color: #616176;
-            background-color: #E6E6E6;
-        }
-
-        .user-header {
-            background-color: #DCE8F6;
-            min-width: 140px;
-        }
-
-        .user {
-            padding: 0 10px;
-            color: #616176;
-            background-color: #E5E5E5;
-            border: 1px solid #DCDCDC;
-            font-weight: bold;
-        }
-
-        .holiday {
-            background-color: #B4FFA8;
-        }
-
-        .half-day {
-            background-color: #FBE1B2;
-        }
-
-        .festive {
-            background-color: #F6BDBC;
-        }
-
-
-    </style>
     <?php
-    $users = \app\models\User::find()->orderBy('name')->all();
+    Yii::$app->controller->module->registerCssFile('calendario.css', [], 'calendario-css');
+
+    $users = \app\models\User::find()->select(['id', 'username', 'name'])->orderBy('name')->all();
     $festives = \app\modules\gestion\models\Festive::find()->select('free_day')->column();
     $monthsList = \kartik\helpers\Enum::monthList();
+    $holidayTypes = \app\modules\gestion\models\HolidayType::getAssocHolidayTypes();
+
+    $defaultDayConfig['value'] = '';
+    $defaultDayConfig['class'][] = 'day';
+
     for ($month = 1; $month <= 12; $month++) {
-        //    $users = ['jsalgado'];
         $monthConfig = [];
 
         $monthDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-//     Box::begin([
-//        "header" => "Expandable",
-//        "expandable" => true,
-//        "filled" => true,
-//    ]);
-        echo Html::tag('h4', $monthsList[$month]);
-        echo Html::beginTag('table', ['class' => 'month', 'id' => $month]);
+        echo Html::tag('h4', $monthsList[$month], ['id' => strtolower($monthsList[$month])]);
+        echo Html::beginTag('table', ['class' => 'month', 'id' => strtolower($monthsList[$month]) . '_table']);
         echo Html::beginTag('thead');
         echo Html::beginTag('tr');
         echo Html::tag('th', '', ['class' => 'user-header']);
@@ -144,50 +86,34 @@ $allowedYears = Enum::yearList($initialYear, $nextYear, true, false);
         echo Html::endTag('tr');
         echo Html::endTag('thead');
         foreach ($users as $user) {
-            $userMonthHolidays = \app\modules\gestion\models\Holidays::findAll(['user_id' => $user->id]);
+            $allUserHolidays = \app\modules\gestion\models\Holidays::findAll(['user_id' => $user->id]);
             echo Html::beginTag('tr');
             echo Html::tag('td', $user->name, ['class' => 'user']);
             for ($day = 1; $day <= $monthDays; $day++) {
-                $fullDate = $year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT) . '-' . str_pad($day, 2, '0',
-                        STR_PAD_LEFT);
-                $dayInfo = new DateTime($fullDate);
-                $monthConfig[$user->username][$day]['class'][] = 'day';
-                if ($dayInfo->format('N') >= 6) {
-                    $monthConfig[$user->username][$day]['class'][] = 'weekend';
-                } elseif (in_array($fullDate, $festives)) {
-                    $monthConfig[$user->username][$day]['class'][] = 'festive';
-                } elseif (!empty($userMonthHolidays)) {
-                    foreach ($userMonthHolidays as $userMonthHoliday) {
-                        if ($fullDate >= $userMonthHoliday->start_date && $fullDate <= $userMonthHoliday->end_date) {
-                            switch ($userMonthHoliday->holiday_type) {
-                                case 2:
-                                    $monthConfig[$user->username][$day]['class'][] = 'half-day';
-                                    $monthConfig[$user->username][$day]['value'] = '1/2';
-                                    break;
-                                case 1:
-                                default:
-                                    $monthConfig[$user->username][$day]['class'][] = 'holiday';
-                                    break;
-                            }
-                        }
+                $dayConfig = $defaultDayConfig;
+                $dayInfo = new DateTime($year . '-' . $month . '-' . $day);
+                $dayFull = $dayInfo->format('Y-m-d');
 
+                if ($dayInfo->format('N') >= 6) {
+                    $dayConfig['class'][] = 'weekend';
+                } elseif (in_array($dayFull, $festives)) {
+                    $dayConfig['class'][] = 'festive';
+                } elseif (!empty($allUserHolidays)) {
+                    foreach ($allUserHolidays as $userHoliday) {
+                        if ($dayFull >= $userHoliday->start_date && $dayFull <= $userHoliday->end_date) {
+                            $dayConfig['class'][] = $holidayTypes[$userHoliday->holiday_type]['class'];
+                            $dayConfig['value'] = $holidayTypes[$userHoliday->holiday_type]['calendar_pin'];
+                        }
                     }
                 }
-
-
+                $monthConfig[$user->username][$day] = $dayConfig;
                 echo Html::tag('td',
-                    isset($monthConfig[$user->username][$day]['value']) ? $monthConfig[$user->username][$day]['value'] : '',
+                    $monthConfig[$user->username][$day]['value'],
                     ['class' => implode(' ', $monthConfig[$user->username][$day]['class'])]);
-
-//        $monthConfig[$user->username][$day] = [];
-//        echo Html::tag('div', $day, ['class' => 'day', 'style' => '']);
-//        echo $day;
             }
             echo Html::endTag('tr');
         }
         echo Html::endTag('table');
-//     Box::end();
-
 
     }
 

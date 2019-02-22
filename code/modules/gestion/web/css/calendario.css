@@ -1,0 +1,49 @@
+.month {
+
+  }
+
+.day {
+    border: 1px solid #DCDCDC;
+    height: 30px;
+    min-width: 30px;
+    text-align: center;
+    color: #616176;
+}
+
+.weekend {
+    background-color: #FEFFCC;
+}
+
+.month-header {
+    border: 1px solid #DCDCDC;
+    height: 30px;
+    min-width: 30px;
+    text-align: center;
+    color: #616176;
+    background-color: #E6E6E6;
+}
+
+.user-header {
+    background-color: #DCE8F6;
+    min-width: 140px;
+}
+
+.user {
+    padding: 0 10px;
+    color: #616176;
+    background-color: #E5E5E5;
+    border: 1px solid #DCDCDC;
+    font-weight: bold;
+}
+
+.holiday {
+    background-color: #B4FFA8;
+}
+
+.half-day {
+    background-color: #FBE1B2;
+}
+
+.festive {
+    background-color: #F6BDBC;
+}

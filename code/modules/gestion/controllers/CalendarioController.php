@@ -53,7 +53,7 @@ class CalendarioController extends Controller
 //        $user->save();
 
         $holidays = new Holidays();
-        $holidays->user_id = 1;
+        $holidays->user_id = Yii::$app->user->id;
         return $this->render('solicitud', ['holidays' => $holidays]);
     }
 
@@ -61,16 +61,25 @@ class CalendarioController extends Controller
     {
         $holidays = new Holidays();
 
+
         $holidays->load(Yii::$app->request->bodyParams);
-        $holidays->user_id = Yii::$app->user->id;
+        if (empty($holidays->user_id)) {
+            $holidays->user_id = Yii::$app->user->id;
+        }
+        if ($holidays->holiday_type != 1 && empty($holidays->end_date)) {
+            $holidays->end_date = $holidays->start_date;
+
+        }
 
 
-        $festives = Festive::find()->select('free_day')->where([
-            'between',
-            'free_day',
-            $holidays->start_date,
-            $holidays->end_date
-        ])->column();
+        $festives = Festive::find()
+            ->select('free_day')
+            ->where([
+                'between',
+                'free_day',
+                $holidays->start_date,
+                $holidays->end_date
+            ])->column();
 
         $holidaysBegin = new \DateTime($holidays->start_date);
         $holidaysEnd = new \DateTime($holidays->end_date);
@@ -120,7 +129,8 @@ class CalendarioController extends Controller
         if (empty($year)) {
             $year = date('Y');
         }
-        return $this->render('departamento', ['year' => $year]);
+        $allowedYears = Holidays::getAllowedYears();
+        return $this->render('departamento', ['year' => $year, 'allowedYears' => $allowedYears]);
     }
 
     public function actionBookstack()
